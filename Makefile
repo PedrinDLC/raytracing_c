@@ -2,19 +2,22 @@
 # Ray Tracing
 #
 
-all: raytracer run view
+all: raytracer output.ppm
 
 raytracer: raytracer.c
 	cc raytracer.c -o raytracer
 
 .PHONY: run clean view
 
-run:
+output.ppm: raytracer
 	./raytracer > output.ppm
 
-clean:
-	rm raytracer output.ppm
+run:
+	./raytracer
 
-view:
+clean:
+	rm -f raytracer output.ppm
+
+view: output.ppm
 	sxiv output.ppm
 # end
