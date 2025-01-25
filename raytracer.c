@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include "vec3.h"
+#include "color.h"
+
 
 int main(int argc, char const *argv[])
 {
@@ -12,21 +15,21 @@ int main(int argc, char const *argv[])
     printf("P3\n%d %d\n255\n", width,height);
 
     for (int i = height-1; i >= 0; i--){
+        fprintf(stderr, "Remaining %d\n", i);
         for (int j = 0; j < width; j++){
-            double r,g,b;
-            int ir,ig,ib;
 
-            r = (double)j / (width-1);
-            g = (double)i / (height-1);
-            b = .25;
+            //printf("%.2f %.2f %.2f\n", minhacor.r, minhacor.g, minhacor.b);   
 
-            ir = (int) (r*255);
-            ig = (int) (g*255);
-            ib = (int) (b*255);
+            color color = 
+                {(double)j / (width-1), //r
+                (double)i / (height-1), //g
+                .25};                   //b
+            
+            write_color(color);
 
-            printf("%d %d %d\n", ir, ig, ib);
         }
     }
+    fprintf(stderr, "Done \n");
     
     return 0;
 }
