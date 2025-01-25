@@ -3,10 +3,39 @@
 #include "color.h"
 #include "ray.h"
 
+float hit_sphere(point3 center, float radius, ray ray)
+{   
+    vec3 oc = vec3sum(ray.origin, vec3multscalar(center, -1.0));
+    float a = vec3normsquared(ray.dir);
+    float half_b = vec3dot(oc, ray.dir);
+    float c = vec3normsquared(oc) - radius*radius;
+    float discriminant = half_b*half_b - a*c;
+    if(discriminant < 0)
+        return -1.0;
+    else{
+        return (-half_b-sqrt(discriminant)) / a;
+    }
+
+
+}
+
+
 color ray_color(ray ray)
 {
+    point3 center = {0., 0., -1.};
+    float t = hit_sphere(center, 0.5, ray);
+
+    if(t > 0.0){
+        vec3 N = vec3normalized(vec3sum(ray_at(ray, t), vec3multscalar(center, -1.)));
+        N.x++;
+        N.y++;
+        N.z++;
+        N = vec3multscalar(N, 0.5);
+
+        return N;
+    }
     vec3 unit_diretion = vec3normalized(ray.dir);
-    float t = 0.5 * (unit_diretion.y+1.0);
+    t = 0.5 * (unit_diretion.y+1.0);
     
     color white = {1., 1., 1.};
     color blue = {0.5, 0.7, 1.0};
