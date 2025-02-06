@@ -15,10 +15,7 @@ float hit_sphere(point3 center, float radius, ray ray)
     else{
         return (-half_b-sqrt(discriminant)) / a;
     }
-
-
 }
-
 
 color ray_color(ray ray)
 {
